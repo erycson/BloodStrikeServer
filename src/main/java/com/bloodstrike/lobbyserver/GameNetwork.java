@@ -27,7 +27,6 @@ public class GameNetwork implements Runnable {
     
     private Socket socket;
     
-    
     public GameNetwork(Socket socket) {
         this.socket = socket;
         new Thread(this).start();
@@ -36,6 +35,8 @@ public class GameNetwork implements Runnable {
     @Override
     @SuppressWarnings("resource")
     public void run() {
+        Thread.currentThread().setName("Client" + socket.getRemoteSocketAddress());
+        
         while(!socket.isClosed()) {
             try {
                 Amf3Input input = new Amf3Input(SerializationContext.getSerializationContext());
@@ -46,6 +47,7 @@ public class GameNetwork implements Runnable {
                     APC apc = (APC) input.readObject();
                     
                     executor.execute(() -> {
+                        Thread.currentThread().setName("Client" + socket.getRemoteSocketAddress());
                         PacketHandler.handle(this, apc);
                     });
                 } else {
@@ -108,6 +110,10 @@ public class GameNetwork implements Runnable {
         } catch (Exception e) {
             Log.error("Erro ao escrever no socket", e);
         }
+    }
+    
+    public String getRemoteAddress() {
+        return socket.getRemoteSocketAddress().toString();
     }
     
     public synchronized void close() {

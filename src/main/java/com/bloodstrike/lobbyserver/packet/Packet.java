@@ -11,4 +11,9 @@ public abstract class Packet implements Runnable {
         this.session = session;
         this.params = params;
     }
+    
+    
+    public void run() {
+        Thread.currentThread().setName("Client" + session.getRemoteAddress());
+    }
 }
