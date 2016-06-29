@@ -30,8 +30,9 @@ public class BagBean implements Serializable {
         b.setBoom1(90777112);
         b.setBoom2(0);
         b.setBoom3(0);
-        
-        return new BagBean[] {b, new BagBean(), new BagBean(), new BagBean()};
+
+        //return new BagBean[] {b, b, b, b};
+        return new BagBean[] {};
     }
     
     
