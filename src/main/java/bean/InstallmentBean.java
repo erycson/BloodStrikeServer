@@ -5,6 +5,8 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
+import flex.messaging.io.amf.ASObject;
+
 @SuppressWarnings("serial")
 public class InstallmentBean implements Serializable {
 	private double id;
@@ -16,8 +18,8 @@ public class InstallmentBean implements Serializable {
 	private Boolean refundEndFlag;
 	private Boolean freezeFlag;
 
-    public static Map<Integer, InstallmentBean> getDemo() {
-        return new HashMap<Integer, InstallmentBean>();
+    public static ASObject getDemo() {
+        return new ASObject();
     }
 	
     public double getId() {

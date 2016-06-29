@@ -3,8 +3,6 @@ package com.bloodstrike.lobbyserver;
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.ByteArrayOutputStream;
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
 import java.io.EOFException;
 import java.io.IOException;
 import java.net.Socket;
@@ -36,6 +34,7 @@ public class GameNetwork implements Runnable {
     }
 
     @Override
+    @SuppressWarnings("resource")
     public void run() {
         while(!socket.isClosed()) {
             try {
@@ -45,7 +44,7 @@ public class GameNetwork implements Runnable {
                 int length = input.readInt();
                 if (length != 0 && length == input.available()) {
                     APC apc = (APC) input.readObject();
-
+                    
                     executor.execute(() -> {
                         PacketHandler.handle(this, apc);
                     });
@@ -56,7 +55,7 @@ public class GameNetwork implements Runnable {
                 }
             }
             catch (SocketException e) {
-                Log.error("Erro no socket", e);
+                //Log.error("Erro no socket", e);
                 break;
             }
             catch (EOFException e) { }
@@ -77,23 +76,35 @@ public class GameNetwork implements Runnable {
         close();
     }
 
+    @SuppressWarnings("resource")
     public synchronized void send(APC apc) {
         try {
             byte[] buffer = Converter.toByteArray(apc.clone());
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
 
-            // Cria o pacote
-            Amf3Output output1 = new Amf3Output(SerializationContext.getSerializationContext());
-            output1.setOutputStream(baos);
-            output1.writeInt(buffer.length);
-            output1.write(buffer);
-            output1.flush();
-            output1.close();
-
-            // Envia o pacote
+            Amf3Output output = new Amf3Output(SerializationContext.getSerializationContext());
+            output.setOutputStream(baos);
+            output.writeInt(buffer.length);
+            output.write(buffer);
+            output.flush();
+            output.close();
+            
             Amf3Output output2 = new Amf3Output(SerializationContext.getSerializationContext());
-            output2.setOutputStream(socket.getOutputStream());
+            output2.setOutputStream(new BufferedOutputStream(socket.getOutputStream()));
             output2.write(baos.toByteArray());
+            output2.flush();
+            //output.close();
+        } catch (Exception e) {
+            Log.error("Erro ao escrever no socket", e);
+        }
+    }
+    
+    public synchronized void send(byte[] buffer) {
+        try {
+            socket.getOutputStream().write(buffer);
+            //BufferedOutputStream out = new BufferedOutputStream(socket.getOutputStream());
+            //out.write(buffer);
+            //out.flush();
         } catch (Exception e) {
             Log.error("Erro ao escrever no socket", e);
         }

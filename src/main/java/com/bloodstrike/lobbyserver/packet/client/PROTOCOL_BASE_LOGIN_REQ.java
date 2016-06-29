@@ -1,5 +1,11 @@
 package com.bloodstrike.lobbyserver.packet.client;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+
+import org.apache.commons.io.FileUtils;
+
 import com.bloodstrike.lobbyserver.GameNetwork;
 import com.bloodstrike.lobbyserver.packet.Packet;
 import com.bloodstrike.lobbyserver.packet.server.PROTOCOL_BASE_LOGIN_ACK;
@@ -72,7 +78,16 @@ public class PROTOCOL_BASE_LOGIN_REQ extends Packet {
         else {
             apc.setFunctionName("callBackLoginSuccess");
             apc.addParameter(new PROTOCOL_BASE_LOGIN_ACK(userInfo));
-            session.send(apc);
+            //session.send(apc);
+
+            try {
+                byte[] data = Files.readAllBytes(new File("D:\\callBackLoginSuccess2.dump").toPath());
+                System.out.println("Enviando: " + data.length);
+                session.send(data);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            
         }
     }
 

@@ -1,7 +1,6 @@
 package com.bloodstrike.lobbyserver.packet;
 
 import java.util.HashMap;
-import java.util.concurrent.Executors;
 
 import org.apache.log4j.Logger;
 
