@@ -1,17 +1,11 @@
 package bean;
 
-import java.io.IOException;
 import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
 import java.util.Vector;
 
-import javax.persistence.*;
-
-import common.net.APC;
-import flex.messaging.io.SerializationContext;
 import flex.messaging.io.amf.ASObject;
-import flex.messaging.io.amf.Amf3Input;
 
 @SuppressWarnings("serial")
 public class UserInfo implements Serializable {

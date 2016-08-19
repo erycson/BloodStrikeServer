@@ -2,8 +2,6 @@ package bean;
 
 import java.io.Serializable;
 import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
 
 import flex.messaging.io.amf.ASObject;
 

@@ -31,7 +31,7 @@ public class MailBean implements Serializable {
         a.setFromCharId(0);
         a.setFromer("");
         a.setType(1);
-        a.setTitle("Comunicado do Clã, content=Parabéns! Você é novo integrante do clã {[OsPro]}, você já pode entrar na página do clã");
+        a.setTitle("Comunicado do ClÃ£, content=ParabÃªns! VocÃª Ã© novo integrante do clÃ£ {[OsPro]}, vocÃª jÃ¡ pode entrar na pÃ¡gina do clÃ£");
         a.setReadFlag(1);
         a.setDateline(dateline); //1463848288s 269ms
         a.setMailPackId(0);

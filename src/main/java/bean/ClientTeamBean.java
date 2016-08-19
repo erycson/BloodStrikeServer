@@ -88,7 +88,7 @@ public class ClientTeamBean implements Serializable {
         t.setMembersNumber(427);
         t.setMembersNumberLimit(500);
         t.setName("{[OsPro]}");
-        t.setNotice("Cl„ [{OsPros}]");
+        t.setNotice("Cl√£ [{OsPros}]");
         t.setQQ("RC: 1546124 skype :GGG1 grupo no wats ad la 27997558075");
         t.setRank(83);
         t.setTeamExp(478483);

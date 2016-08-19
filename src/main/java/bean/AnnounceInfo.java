@@ -30,7 +30,7 @@ public class AnnounceInfo implements Serializable {
         AnnounceInfo a = new AnnounceInfo();
         a.setId(11);
         a.setTType(1);
-        a.setContent("<a href='http://goo.gl/forms/mX0GMJAeoa' target='_blank'>Evento promovendo talentos, concorra a uma rugido balrog e ganhe código brinde (só os duzentos primeiros*)! Clique aqui e participe!</a>");
+        a.setContent("<a href='http://goo.gl/forms/mX0GMJAeoa' target='_blank'>Evento promovendo talentos, concorra a uma rugido balrog e ganhe cÃ³digo brinde (sÃ³ os duzentos primeiros*)! Clique aqui e participe!</a>");
         a.setFlag(1);
         a.setStartTime(startTime);
         a.setEndTime(endTime);

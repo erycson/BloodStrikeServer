@@ -64,7 +64,7 @@ public class ClientTeamUserBean implements Serializable {
     public int newMsgNum = 0;
     
     public static ClientTeamUserBean getDemo() {
-        // retorna 0 quando n„o tiver time
+        // retorna 0 quando n√£o tiver time
         
         Calendar dateline = Calendar.getInstance();
         dateline.setTimeInMillis(1464534552130L);
