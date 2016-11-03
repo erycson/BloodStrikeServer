@@ -1,16 +1,16 @@
 package com.bloodstrike.lobbyserver.packet;
 
 import java.util.HashMap;
-
-import org.apache.log4j.Logger;
-
-import com.bloodstrike.lobbyserver.GameNetwork;
-import com.bloodstrike.lobbyserver.packet.client.*;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 
 import common.net.APC;
 
+import com.bloodstrike.lobbyserver.ConnetionHandler;
+import com.bloodstrike.lobbyserver.packet.client.*;
+
 public class PacketHandler {
-    final static Logger Log = Logger.getLogger(GameNetwork.class);
+    private static final Logger logger = LogManager.getLogger(PacketHandler.class);
     
     private static PacketHandler instance = PacketHandler.getInstance();
     private static HashMap<String, Class<? extends Packet>> packets;
@@ -40,20 +40,20 @@ public class PacketHandler {
         return instance;
     }
     
-    public static void handle(GameNetwork session, APC request) {
-        Log.debug("Pacote recebido: " + request.getFunctionName());
+    public static void handle(ConnetionHandler conn, APC request) {
+        logger.debug("Pacote recebido: " + request.getFunctionName());
         
         if (!packets.containsKey(request.getFunctionName())) {
-            Log.warn("Pacote não implementado: " + request.getFunctionName());
+            logger.warn("Pacote não implementado: " + request.getFunctionName());
             return;
         }
 
         try {
             Class<?> ref = packets.get(request.getFunctionName());
-            Packet pkt = (Packet) ref.getDeclaredConstructor(new Class[] {GameNetwork.class, Object[].class}).newInstance(session, request.getParameters());
+            Packet pkt = (Packet) ref.getDeclaredConstructor(new Class[] {ConnetionHandler.class, Object[].class}).newInstance(conn, request.getParameters());
             pkt.run();
         } catch (Exception e) {
-            Log.error("Error ao processar o pacote: " + request.getFunctionName(), e);
+            logger.error("Error ao processar o pacote: " + request.getFunctionName(), e);
         }
     }
 }

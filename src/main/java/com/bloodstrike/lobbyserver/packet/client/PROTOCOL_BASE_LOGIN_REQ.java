@@ -4,9 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 
-import org.apache.commons.io.FileUtils;
-
-import com.bloodstrike.lobbyserver.GameNetwork;
+import com.bloodstrike.lobbyserver.ConnetionHandler;
 import com.bloodstrike.lobbyserver.packet.Packet;
 import com.bloodstrike.lobbyserver.packet.server.PROTOCOL_BASE_LOGIN_ACK;
 
@@ -15,7 +13,7 @@ import common.net.APC;
 
 public class PROTOCOL_BASE_LOGIN_REQ extends Packet {
 
-    public PROTOCOL_BASE_LOGIN_REQ(GameNetwork session, Object[] params) {
+    public PROTOCOL_BASE_LOGIN_REQ(ConnetionHandler session, Object[] params) {
         super(session, params);
     }
 

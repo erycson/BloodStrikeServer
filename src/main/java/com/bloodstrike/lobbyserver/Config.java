@@ -1,32 +1,36 @@
 package com.bloodstrike.lobbyserver;
 
 import java.util.Properties;
-
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 
 public class Config {
-    final static Logger Log = Logger.getLogger(NetworkServer.class);
+    private static final Logger logger = LogManager.getLogger(Config.class);
     private static Config instance;
     
-    public static String HOST = "127.0.0.1";
-    public static int PORT = 4000;
+    private Properties props;
 
     private Config() {
-        Properties props = new Properties();
+        props = new Properties();
         try {
             props.load(Config.class.getResourceAsStream("/server.properties"));
         } catch (Exception e) {
-            Log.error("Erro ao carregar as cofigurações", e);
-            return;
+            
+            logger.error("Erro ao carregar as cofigurações", e);
         }
-        
-        HOST = props.getProperty("network.host");
-        PORT = Integer.parseInt(props.getProperty("network.port"));
     }
     
-    public static Config getInstance() {
+    public static void loadConfig() {
         if (instance == null)
             instance = new Config();
-        return instance;
+    }
+    
+    public static String get(String name) {
+        String value = instance.props.getProperty(name, null);
+            
+        if (value == null)
+            logger.error(String.format("A configuração \"%s\" não foi encontrada no arquivo de configuração", name));
+        
+        return value;
     }
 }
